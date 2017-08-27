@@ -94,4 +94,16 @@ class Response{
 	
 }
 
-export {Request, Response};
+class Middleware{
+
+  use(fn) {
+    this.go = ((stack) => (next) => stack(() => fn.call(this, next.bind(this))))(this.go);
+  }
+
+  go(next){ 
+  	next(); 
+  }
+  
+}
+
+export {Request, Response, Middleware};

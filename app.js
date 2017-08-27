@@ -3,6 +3,16 @@ import {JskhanCore as Jskhan} from './modules/Jskhan-Core.js';
 
 const Khan = new Jskhan();
 const Router = Khan.Router();
+const Middleware = Router.Middleware();
+
+Khan.Set('nome', "PaulaoDev");
+Khan.Set('DataAtual', new Date());
+
+Middleware.use((next) => {
+	this.nome = Khan.Get('nome');
+	this.data = Khan.Get('DataAtual');
+	next();
+});
 
 // Rota Default
 Router.io('/', (Req, Res) => {
@@ -21,4 +31,7 @@ Router.io('/home/{page}', (Req, Res) => {
 	`);
 });
 
-Router.Run();
+Router.Listen(() => {
+	console.log(this.nome);
+	console.log(this.data);
+});

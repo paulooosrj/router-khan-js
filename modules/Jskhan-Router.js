@@ -10,7 +10,12 @@ class Router{
 		this.$uri = location.hash.substring(1);
 		this.$currentUri = `${this.$uri}`.toString();
 		this.routess = {};
+		this.middleware = new Helpers.Middleware();
 	}
+
+	Middleware(){
+      	return this.middleware;
+    }
 
 	params(){
 		var url = this.$currentUri;
@@ -58,7 +63,7 @@ class Router{
 		this.routess[route] = callback;
 	}
 
-	Run(){
+	Listen(fn = function(){}){
 		if(this.$currentUri in this.routess){
 			let Request = new Helpers.Request(this.$currentUri),
 				Response = new Helpers.Response();
@@ -71,6 +76,7 @@ class Router{
 				this.routess[this.paramActive["route"]]( Request, Response );
 			}
 		}
+		this.middleware.go(fn);
 	}
 
 }

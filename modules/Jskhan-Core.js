@@ -8,10 +8,20 @@ class JskhanCore{
   	constructor(){
       if(!io.isset('$')) throw io.utf8_decode("Jquery não foi Importado!!!");
   		this.log("JskhanCore Carregado!!");
+      this.router = new JskhanRouter();
+      this.$db = {};
   	}
 
+    Get(n){
+      return this.$db[n];
+    }
+
+    Set(n, v){
+      this.$db[n] = v;
+    }
+
     Router(){
-      return new JskhanRouter();
+      return this.router;
     }
 
   	log(msg){
