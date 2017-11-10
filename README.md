@@ -18,7 +18,7 @@
  ### System Requirements
   - Ecmascript >= 6
  
- ### Init Router Khan JS
+ ### Init Router Khan JS [ Script type="module" ]
  
  ```javascript
  
