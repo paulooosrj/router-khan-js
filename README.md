@@ -1,33 +1,51 @@
 # Router Khan Version ( Ecmascript 6 )
   
- Router install
+ ### Router install
   - **bower install router-khan-js**
  
- About Router Khan JS
+ ### About Router Khan JS
   - Fast and simple.
   - Routes without needing the hash.
   - History was used api.
+  
+ ### Documentation
+  - Complete system documentation is available online at [this link](https://paulaodev.github.io/RouterKhanJs/documentation).
+  
+ ### Contribution
+  - Send error reports, suggestions, and upload requests to the [GitHub issue tracker](https://github.com/PaulaoDev/router-khan-js/issues).
+  - Read the [File](https://github.com/PaulaoDev/router-khan-js/blob/master/CONTRIBUTING.md).
+  
+ ### System Requirements
+  - Ecmascript >= 6
  
- Init Router Khan JS
+ ### Init Router Khan JS
+ 
  ```javascript
  
     "use strict";
 
-    		import { Router as RouterClass } from "http://my_url/bower_components/router-khan/src/Router.js";
+    import { Router as RouterClass } from "http://my_url/bower_components/router-khan/src/Router.js";
 
-    		;(async (window) => {
+    ;(async (window) => {
 
-    			const Router = RouterClass.create()
+    	const Router = RouterClass.create()
 
-    			Router.any('/', async () => document.body.innerHTML +=  "Init !!")
-    			Router.any('/perfil/{name}/{id}', async (param) => {
-    				document.body.innerHTML += `
-    					<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
-    				`;
-    			})
+    	Router.any('/', async () => document.body.innerHTML +=  "Init !!")
+    	Router.any('/perfil/{name}/{id}', async (param) => {
+    		document.body.innerHTML += `
+    			<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
+    		`;
+    	})
 
-    			Router.dispatch();
+    	Router.dispatch();
 
-    		})(window);
+    })(window);
  
  ```
+  
+ ### License
+  The RouterKhan is licensed under the MIT license. See [License File](https://github.com/PaulaoDev/router-khan-js/blob/master/LICENSE) for more information.
+  
+ ### Contact
+   - [Facebook](https://fb.com/PauloRodriguesYT).
+   - [Whatsapp](https://bit.ly/whatsappdopaulo).
