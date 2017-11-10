@@ -1,6 +1,4 @@
-<p style="text-align:center">
-  ![Ecmascript 6](https://telerikhelper.files.wordpress.com/2015/08/es6.png)  
-</p>
+<p align="center"><img src="https://telerikhelper.files.wordpress.com/2015/08/es6.png" alt="Ecmascript 6"/></p>
 
 # Router Khan Version ( Ecmascript 6 )
   
