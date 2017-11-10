@@ -3,7 +3,7 @@
 # Router Khan Version ( Ecmascript 6 )
   
  ### Router install
-  - **bower install router-khan-js**
+  `bower install router-khan-js`
  
  ### About Router Khan JS
   - Fast and simple.
@@ -20,7 +20,7 @@
  ### System Requirements
   - Ecmascript >= 6
  
- ### Init Router Khan JS [ Script type="module" ]
+ ### Init Router Khan JS [`<script type="module">`]
  
  ```javascript
  
