@@ -1,5 +1,6 @@
 {
   "name": "router-khan",
+  "version": "v1.0",
   "homepage": "https://github.com/PaulaoDev/router-khan-js",
   "authors": [
     "Paulão Developer <jskhanframework@gmail.com>"
@@ -7,7 +8,9 @@
   "description": "Router system in ES6 Async Programming",
   "main": "src/Router.js",
   "keywords": [
-    "Router"
+    "Router",
+    "Router es6",
+    "Router JS"
   ],
   "license": "MIT",
   "ignore": [
