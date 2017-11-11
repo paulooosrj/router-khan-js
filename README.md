@@ -29,10 +29,28 @@
  ### System Requirements
   - Ecmascript >= 6
  
- ### Init Router Khan JS [`<script type="module">`]
+ ### Init RouterKhanJS instance Router
  
  ```javascript
+    "use strict";
+    
+    ;(async (window, Router) => {
+      const Router = RouterClass.create()
+
+    	Router.any('/', async () => document.body.innerHTML +=  "Init !!")
+    	Router.any('/perfil/{name}/{id}', async (param) => {
+    		document.body.innerHTML += `
+    			<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
+    		`;
+    	})
+
+    	Router.dispatch();
+    })(window, Router);
+ ```
  
+ ### Init RouterKhanJS using Modules [`<script type="module">`]
+ 
+ ```javascript
     "use strict";
 
     import { Router as RouterClass } from "http://my_url/bower_components/router-khan/src/Router.js";
@@ -51,7 +69,6 @@
     	Router.dispatch();
 
     })(window);
- 
  ```
   
  ### License
