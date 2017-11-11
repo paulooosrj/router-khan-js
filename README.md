@@ -4,6 +4,15 @@
   
  ### Router install
   `bower install router-khan-js`
+  
+ ### Using CDN
+  ```html 
+  <script src="https://cdn.rawgit.com/PaulaoDev/router-khan-js/master/src/Router.cdn.min.js"> 
+  ```
+  #### or
+  ```html
+  <script src="https://cdn.rawgit.com/PaulaoDev/router-khan-js/master/src/Router.cdn.js">
+  ```
  
  ### About Router Khan JS
   - Fast and simple.
