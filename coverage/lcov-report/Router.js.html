@@ -158,8 +158,10 @@
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
 <a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,145 +252,152 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 &nbsp;
 export default class RouterProvide {
+  static create(...args) {
+    if (!RouterProvide.instance) {
+      RouterProvide.instance = new this(...args);
+    }
+    return RouterProvide.instance;
+  }
 &nbsp;
-     static create(...args) {
-        if (!RouterProvide.instance) {
-            RouterProvide.instance = new this(...args);
-        }
-        return RouterProvide.instance;
-     }
+  constructor(browser = true) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (browser) {
+      document.body.innerHTML += '&lt;div id="view-router"&gt;&lt;/div&gt;';
+    }
+    this.routes = new Map();
+    this.params = [];
+  }
 &nbsp;
-     constructor(browser = true) {
-        <span class="missing-if-branch" title="else path not taken" >E</span>if(browser){ 
-            document.body.innerHTML += '&lt;div id="view-router"&gt;&lt;/div&gt;';
-        }
-        this.routes = new Map();
-        this.params = [];
-     }
+  escapeRegExp(string) {
+    return "^" + string.replace(/\//gim, "\\/") + "$";
+  }
 &nbsp;
-     escapeRegExp(string) {
-        return "^" + string.replace(/\//gim, '\\/') + '$';
-     }
+  isRouteParam(url) {
+    const isParamUrl = url =&gt; url.match(/\{(.*?)\}/gim);
+    const verify = isParamUrl(url);
+    if (verify &amp;&amp; Array.isArray(verify)) {
+      const replaceParam = parameter =&gt; parameter.replace(/(\{|\})/gim, "");
+      const replaceKeys = (link, keys) =&gt; {
+        return link.replace(new RegExp(`(${keys.join("|")})`, "gim"), "(.*?)");
+      };
+      const keys = verify.map(param =&gt; replaceParam(param).trim());
+      const newRoute = replaceKeys(url, verify);
+      return { keys, newRoute };
+    }
+    return false;
+  }
 &nbsp;
-     isRouteParam(url){
-         const isParamUrl = url =&gt; url.match(/\{(.*?)\}/gim);
-         const verify = isParamUrl(url);
-         if(verify &amp;&amp; Array.isArray(verify)){
-             const replaceParam = parameter =&gt; parameter.replace(/(\{|\})/gim, '');
-             const replaceKeys = (link, keys) =&gt; {
-                 return link.replace(new RegExp(`(${keys.join('|')})`, 'gim'), '(.*?)');
-             };
-             const keys = verify.map(param =&gt; replaceParam(param).trim());
-             const newRoute = replaceKeys(url, verify);
-             return { keys, newRoute };
-         }
-         return false;
-     }
+  toRoute(route) {
+    return "/#" + route;
+  }
 &nbsp;
-     toRoute(route){
-         return '/#' + route;
-     }
+  redirect(route) {
+    const location = this.toRoute(route);
+    window.location = location;
+    return location;
+  }
 &nbsp;
-     redirect(route){
-         const location = this.toRoute(route);
-         window.location = location;
-         return location;
-     }
+  any(route, ...calls) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.routes.has(route) === false) {
+      const verifyParam = this.isRouteParam(route);
+      if (verifyParam === false || verifyParam === null) {
+        this.routes.set(new RegExp(this.escapeRegExp(route)), calls.reverse());
+      } else <span class="missing-if-branch" title="else path not taken" >E</span>if (verifyParam.hasOwnProperty("newRoute")) {
+        let escaped = new RegExp(this.escapeRegExp(verifyParam.newRoute));
+        this.params.push({ route: escaped, keys: verifyParam.keys });
+        this.routes.set(escaped, calls.reverse());
+      }
+    }
+  }
 &nbsp;
-     any(route, ...calls) {
-        <span class="missing-if-branch" title="else path not taken" >E</span>if (this.routes.has(route) === false) {
-            const verifyParam = this.isRouteParam(route);
-            if(verifyParam === false || verifyParam === null){
-                this.routes.set(new RegExp(this.escapeRegExp(route)), calls.reverse());
-            } else <span class="missing-if-branch" title="else path not taken" >E</span>if(verifyParam.hasOwnProperty('newRoute')) { 
-                let escaped = new RegExp(this.escapeRegExp(verifyParam.newRoute));
-                this.params.push({ route: escaped, keys: verifyParam.keys });
-                this.routes.set(escaped, calls.reverse());
-            }
-        }
-     }
+  async runMiddleware(middleware, chain) {
+    let view = document.getElementById("view-router");
+    let next = null;
+    for (let i = 0; i &lt; middleware.length; i += 1) {
+      next = middleware[i].bind(null, chain, view, next);
+    }
+    // run the middleware chain
+    next();
+  }
 &nbsp;
-     async runMiddleware(middleware, chain) {
-        let view = document.getElementById('view-router');
-        let next = null;
-        for (let i = 0; i &lt; middleware.length; i += 1) {
-            next = middleware[i].bind(null, chain, view, next);
-        }
-        // run the middleware chain
-        next();
-     }
+  trate(eventUrl) {
+    const routesMap = Array.from(this.routes.keys());
+    const find = routesMap.find((routeMaped, key) =&gt; routeMaped.test(eventUrl));
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (find) {
+      const findCall = this.routes.get(find);
+      const isParam = this.params.find(routed =&gt; routed.route === find);
+      if (isParam &amp;&amp; findCall) {
+        let [, ...values] = eventUrl.match(isParam.route);
+        let keysValues = {};
+        isParam.keys.map((vKey, iKey) =&gt; (keysValues[vKey] = values[iKey]));
+        console.log(keysValues);
+        return this.runMiddleware(findCall, keysValues);
+      }
+      return this.runMiddleware(findCall, {});
+    }
+  }
 &nbsp;
-     trate(eventUrl){
-         const routesMap = Array.from(this.routes.keys());
-         const find = routesMap.find((routeMaped, key) =&gt; routeMaped.test(eventUrl));
-         <span class="missing-if-branch" title="else path not taken" >E</span>if(find){
-             const findCall = this.routes.get(find);
-             const isParam = this.params.find(routed =&gt; routed.route === find);
-             if(isParam &amp;&amp; findCall){
-                 let [, ...values] = eventUrl.match(isParam.route);
-                 let keysValues = {};
-                 isParam.keys.map((vKey, iKey) =&gt; keysValues[vKey] = values[iKey]);
-                 console.log(keysValues)
-                 return this.runMiddleware(findCall, keysValues);
-             }
-             return this.runMiddleware(findCall, {});
-         }
-     }
+  push_event(e) {
+    window.history.pushState(
+      {
+        url: e
+      },
+      e,
+      e
+    );
+    let param = this.trate(e);
+  }
 &nbsp;
-     push_event(e) {
-        window.history.pushState({
-       url: e
-      }, e, e)
-        let param = this.trate(e);
-     }
+  dispatch() {
+    window.onpopstate = <span class="fstat-no" title="function not covered" >e </span>=&gt; {
+      var url =
+<span class="cstat-no" title="statement not covered" >        window.location.hash !== ""</span>
+          ? window.location.hash.split("#").pop()
+          : window.location.pathname;
+<span class="cstat-no" title="statement not covered" >      this.push_event(url);</span>
+    };
 &nbsp;
-     dispatch() {
+    let url =
+      window.location.hash !== ""
+        ? <span class="branch-0 cbranch-no" title="branch not covered" >window.location.hash.split("#").pop()</span>
+        : window.location.pathname;
 &nbsp;
-        window.onpopstate = <span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
-            var url = <span class="cstat-no" title="statement not covered" >(window.location.hash !== "") </span>
-                        ? window.location.hash.split('#').pop() 
-                        : window.location.pathname;
-<span class="cstat-no" title="statement not covered" >            this.push_event(url);</span>
-        }
-&nbsp;
-        let url = (window.location.hash !== "") 
-                    ? <span class="branch-0 cbranch-no" title="branch not covered" >window.location.hash.split('#').pop() </span>
-                    : window.location.pathname;
-&nbsp;
-        this.push_event(url);
-&nbsp;
-     }
-&nbsp;
-}</pre></td></tr>
+    this.push_event(url);
+  }
+}
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 17:42:28 GMT-0300 (Brasilia Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 18:18:01 GMT-0300 (Brasilia Standard Time)
 </div>
 </div>
 <script src="prettify.js"></script>
