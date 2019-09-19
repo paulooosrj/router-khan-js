@@ -1,18 +1,6 @@
 <p align="center"><img src="https://i.imgur.com/PYCKGPF.png" alt="Ecmascript 6"/></p>
 
 # Router Khan Version ( Ecmascript 6 )
-  
- ### Router install
-  `bower install router-khan-js`
-  
- ### Using CDN
-  ```html 
-  <script src="https://cdn.rawgit.com/PaulaoDev/router-khan-js/master/src/Router.cdn.min.js"> 
-  ```
-  #### or
-  ```html
-  <script src="https://cdn.rawgit.com/PaulaoDev/router-khan-js/master/src/Router.cdn.js">
-  ```
  
  ### About Router Khan JS
   - Fast and simple.
@@ -28,47 +16,59 @@
   
  ### System Requirements
   - Ecmascript >= 6
- 
- ### Init RouterKhanJS instance Router
- 
- ```javascript
-    "use strict";
-    
-    ;(async (window, Router) => {
-      const Router = RouterClass.create()
 
-    	Router.any('/', async () => document.body.innerHTML +=  "Init !!")
-    	Router.any('/perfil/{name}/{id}', async (param) => {
-    		document.body.innerHTML += `
-    			<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
-    		`;
-    	})
-
-    	Router.dispatch();
-    })(window, Router);
- ```
  
  ### Init RouterKhanJS using Modules [`<script type="module">`]
  
  ```javascript
     "use strict";
 
-    import { Router as RouterClass } from "http://my_url/bower_components/router-khan/src/Router.js";
+    import RouterProvide from "./src/Router.js";
 
-    ;(async (window) => {
+    (async window => {
+        const Router = RouterProvide.create();
 
-    	const Router = RouterClass.create()
-
-    	Router.any('/', async () => document.body.innerHTML +=  "Init !!")
-    	Router.any('/perfil/{name}/{id}', async (param) => {
-    		document.body.innerHTML += `
-    			<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
-    		`;
-    	})
-
-    	Router.dispatch();
-
-    })(window);
+        // example simple route
+        Router.any("/", async (data, viewRouter) => {
+          console.log("Init !!");
+          viewRouter.innerHTML = "<h1>Router init</h1>";
+        });
+        
+        // simple route using middleware
+        Router.any(
+          "/home",
+          async (data, viewRouter, next) => {
+            data.id = Math.random() * 1000;
+            next();
+          },
+          async ({ view, id }, viewRouter, next) => {
+            const homePromise = () =>
+              new Promise((resolve, reject) => {
+                resolve("Home !! id is: " + id);
+              });
+            viewRouter.innerHTML = await homePromise();
+            next();
+          },
+          () => console.log("Finish exec middleware")
+        );
+        
+        // simple route redirect
+        Router.any("/toRedirect", () => {
+          Router.redirect("/redirected");
+        });
+        
+        // simple route receive router
+        Router.any("/redirected", (data, viewRouter) => {
+          viewRouter.innerHTML = `<h1>Redirecionado com sucesso!!</h1>`;
+        });
+        
+        // simple route with parameters
+        Router.any("/perfil/{name}/{id}", async ({ name, id }, viewRouter) => {
+          viewRouter.innerHTML = `<h1>Perfil ${name} is ID ${id}</h1>`;
+        });
+        
+        // init router
+        Router.dispatch();
  ```
   
  ### License
