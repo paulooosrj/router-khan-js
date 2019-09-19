@@ -1,32 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <title>Router ES6</title>
-    </head>
-    <body>
-    	<script type="module" async>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Router ES6</title>
+    <style>
+      a {
+        text-decoration: none;
+        border-radius: 10px;
+        padding: 20px 40px;
+        background: yellow;
+        color: black;
+        font-size: 17px;
+        text-transform: capitalize;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="src/Router.cdn.js"></script>
+    <script>
+      "use strict";
 
-    		"use strict";
+      // import RouterProvide from "./src/Router.js?version=2300";
 
-    		import { Router as RouterClass } from "http://localhost/src/Router.js";
+      (async window => {
+        const Router = RouterProvide.create();
+        const templateLinks = `
+                    <br><br><a href="${Router.toRoute("/")}">Go to Init</a>
+                    <br><br><br><br><a href="${Router.toRoute(
+                      "/home"
+                    )}">Go to Home</a>
+                    <br><br><br><br><a href="${Router.toRoute(
+                      "/toRedirect"
+                    )}">Go Redirect</a>
+                    <br><br><br><br><a href="${Router.toRoute(
+                      "/perfil/Machine/10"
+                    )}">Go to profile Router</a>
+                    <br><br><br>
+                `;
 
-    		;(async (window) => {
+        Router.any("/", async (data, viewRouter) => {
+          console.log("Init !!");
+          viewRouter.innerHTML = templateLinks;
+        });
 
-    			const Router = RouterClass.create()
+        Router.any(
+          "/home",
+          async (data, viewRouter, next) => {
+            data.id = Math.random() * 1000;
+            next();
+          },
+          async ({ view, id }, viewRouter, next) => {
+            const homePromise = () =>
+              new Promise((resolve, reject) => {
+                resolve("Home !! id is: " + id);
+              });
+            viewRouter.innerHTML = templateLinks + (await homePromise());
+            next();
+          },
+          () => console.log("Finish exec middleware")
+        );
 
-    			Router.any('/', async () => console.log("Init !!"))
-    			Router.any('/home', async () => console.log("Home !!"))
-    			Router.any('/perfil/{name}/{id}', async (param) => {
-    				document.body.innerHTML += `
-    					<h1>Perfil ${param["name"]} is ID ${param["id"]}</h1>
-    				`;
-    			})
+        Router.any("/toRedirect", () => {
+          Router.redirect("/redirected");
+        });
 
-    			Router.dispatch();
+        Router.any("/redirected", (data, viewRouter) => {
+          viewRouter.innerHTML =
+            templateLinks +
+            `
+                        <h1>Redirecionado com sucesso!!</h1>
+                    `;
+        });
 
-    		})(window);
+        Router.any("/perfil/{name}/{id}", async ({ name, id }, viewRouter) => {
+          viewRouter.innerHTML =
+            templateLinks +
+            `
+                        <h1>Perfil ${name} is ID ${id}</h1>
+                    `;
+        });
 
-    	</script>
-    </body>
+        Router.dispatch();
+      })(window);
+    </script>
+  </body>
 </html>

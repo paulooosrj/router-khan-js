@@ -1,0 +1,41 @@
+{
+  "name": "router-khan-js",
+  "version": "1.0.0",
+  "description": "<p align=\"center\"><img src=\"https://i.imgur.com/PYCKGPF.png\" alt=\"Ecmascript 6\"/></p>",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "http-server": "^0.11.1",
+    "jest": "^24.9.0",
+    "minify": "^4.1.3",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.18.2"
+  },
+  "pre-commit": [
+    "pre-guide"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0"
+  },
+  "scripts": {
+    "start": "http-server ./ -p 8080",
+    "test": "jest",
+    "pre-guide": "prettier --write src/Router.js && prettier --write index.html && minify src/Router.js > src/Router.min.js && npx babel --presets=@babel/env --plugins=@babel/plugin-transform-runtime  src/Router.js --out-file src/Router.cdn.js && minify src/Router.cdn.js > src/Router.cdn.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulooosrj/router-khan-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulooosrj/router-khan-js/issues"
+  },
+  "homepage": "https://github.com/paulooosrj/router-khan-js#readme"
+}

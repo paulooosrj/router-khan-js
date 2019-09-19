@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1568925748610" clover="3.2.0">
+  <project timestamp="1568925748610" name="All files">
+    <metrics statements="54" coveredstatements="52" conditionals="27" coveredconditionals="20" methods="19" coveredmethods="18" elements="100" coveredelements="90" complexity="0" loc="54" ncloc="54" packages="1" files="1" classes="1"/>
+    <file name="Router.js" path="/home/paulojunioromao/router-khan-js/src/Router.js">
+      <metrics statements="54" coveredstatements="52" conditionals="27" coveredconditionals="20" methods="19" coveredmethods="18"/>
+      <line num="6" count="10" type="cond" truecount="2" falsecount="0"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="9" count="10" type="stmt"/>
+      <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="14" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="21" count="6" type="stmt"/>
+      <line num="25" count="7" type="stmt"/>
+      <line num="26" count="7" type="stmt"/>
+      <line num="27" count="7" type="cond" truecount="4" falsecount="0"/>
+      <line num="28" count="3" type="stmt"/>
+      <line num="29" count="3" type="stmt"/>
+      <line num="30" count="3" type="stmt"/>
+      <line num="32" count="3" type="stmt"/>
+      <line num="33" count="3" type="stmt"/>
+      <line num="34" count="3" type="stmt"/>
+      <line num="36" count="4" type="stmt"/>
+      <line num="40" count="2" type="stmt"/>
+      <line num="44" count="1" type="stmt"/>
+      <line num="45" count="1" type="stmt"/>
+      <line num="46" count="1" type="stmt"/>
+      <line num="50" count="5" type="cond" truecount="1" falsecount="1"/>
+      <line num="51" count="5" type="stmt"/>
+      <line num="52" count="5" type="cond" truecount="4" falsecount="0"/>
+      <line num="53" count="3" type="stmt"/>
+      <line num="54" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="55" count="2" type="stmt"/>
+      <line num="56" count="2" type="stmt"/>
+      <line num="57" count="2" type="stmt"/>
+      <line num="63" count="3" type="stmt"/>
+      <line num="64" count="3" type="stmt"/>
+      <line num="65" count="3" type="stmt"/>
+      <line num="66" count="3" type="stmt"/>
+      <line num="69" count="3" type="stmt"/>
+      <line num="73" count="3" type="stmt"/>
+      <line num="74" count="7" type="stmt"/>
+      <line num="75" count="3" type="cond" truecount="1" falsecount="1"/>
+      <line num="76" count="3" type="stmt"/>
+      <line num="77" count="5" type="stmt"/>
+      <line num="78" count="3" type="cond" truecount="4" falsecount="0"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="80" count="1" type="stmt"/>
+      <line num="81" count="1" type="stmt"/>
+      <line num="82" count="1" type="stmt"/>
+      <line num="83" count="1" type="stmt"/>
+      <line num="85" count="2" type="stmt"/>
+      <line num="90" count="1" type="stmt"/>
+      <line num="93" count="1" type="stmt"/>
+      <line num="98" count="1" type="stmt"/>
+      <line num="99" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="102" count="0" type="stmt"/>
+      <line num="105" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="109" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
