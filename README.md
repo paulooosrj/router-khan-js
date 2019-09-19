@@ -41,7 +41,7 @@
             data.id = Math.random() * 1000;
             next();
           },
-          async ({ view, id }, viewRouter, next) => {
+          async ({ id }, viewRouter, next) => {
             const homePromise = () =>
               new Promise((resolve, reject) => {
                 resolve("Home !! id is: " + id);
