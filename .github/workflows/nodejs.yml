@@ -21,6 +21,5 @@ jobs:
       run: |
         npm install
         npm test
-        npm publish
       env:
         CI: true
